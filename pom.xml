@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2010 Les Hazlewood
+  ~ 
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); 
+  ~ you may not use this file except in compliance with the License. 
+  ~ You may obtain a copy of the License at 
+  ~ 
+  ~     http://www.apache.org/licenses/LICENSE-2.0 
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software 
+  ~ distributed under the License is distributed on an "AS IS" BASIS, 
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+  ~ See the License for the specific language governing permissions and 
+  ~ limitations under the License. 
+  -->
+<!--suppress osmorcNonOsgiMavenDependency -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- <parent>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>7</version>
+    </parent> -->
+
+    <groupId>code.google.com</groupId>
+    <artifactId>emailaddress-root</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-incubating-SNAPSHOT</version>
+
+    <name>Email Address Validator</name>
+    <url>https://code.google.com/p/emailaddress/</url>
+    <description>
+        The Email Address Validator project provides a fast and RFC compliant validation mechanism for
+        popular programming languages.
+    </description>
+    <inceptionYear>2010</inceptionYear>
+
+    <scm>
+        <connection>scm:svn:http://emailaddress.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://emailaddress.googlecode.com/svn/trunk</developerConnection>
+        <url>https://code.google.com/p/emailaddress/source/browse/#svn/trunk</url>
+    </scm>
+    <issueManagement>
+        <system>Google Code</system>
+        <url>https://code.google.com/p/emailaddress/issues/list</url>
+    </issueManagement>
+
+    <properties>
+        <jdk.version>1.5</jdk.version>
+        <slf4j.version>1.5.6</slf4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>java</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 3rd party dependencies -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <!-- Required in the sample apps only for 3rd-party libraries that expect to call
+                     the commons logging APIs -->
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.15</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.mail</groupId>
+                        <artifactId>mail</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.jms</groupId>
+                        <artifactId>jms</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.jdmk</groupId>
+                        <artifactId>jmxtools</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.jmx</groupId>
+                        <artifactId>jmxri</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Note that reporting may fail with lower settings than something like: MAVEN_OPTS="-X512m -XX:MaxPermSize=128m" -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.6.1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <source>${jdk.version}</source>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <linksource>true</linksource>
+                    <links>
+                        <link>http://java.sun.com/javase/6/docs/api/</link>
+                        <link>http://java.sun.com/javaee/5/docs/api/</link>
+                        <link>http://www.slf4j.org/api/</link>
+                        <link>http://junit.org/junit/javadoc/4.4/</link>
+                        <link>http://easymock.org/api/easymock/2.4/</link>
+                    </links>
+                    <reportSets>
+                        <reportSet>
+                            <id>aggregate</id>
+                            <configuration>
+                            </configuration>
+                            <reports>
+                                <report>aggregate</report>
+                            </reports>
+                        </reportSet>
+                    </reportSets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <profiles>
+        <profile>
+            <id>docs</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.2</version>
+                        <executions>
+                            <execution>
+                                <id>attach-api-docs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.0.4</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
